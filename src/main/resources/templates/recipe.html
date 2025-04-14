@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${recipe.getTitle()} + ' - CookBook'"></title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .recipe-header {
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 15px;
+      margin-bottom: 20px;
+    }
+    .recipe-title {
+      color: #2c3e50;
+      margin-top: 0;
+    }
+    .recipe-meta {
+      color: #7f8c8d;
+      font-size: 0.9em;
+      margin-bottom: 15px;
+    }
+    .recipe-text {
+      white-space: pre-line;
+      line-height: 1.6;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 20px;
+      color: #3498db;
+      text-decoration: none;
+    }
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+<div class="recipe-header">
+  <h1 class="recipe-title" th:text="${recipe.getTitle()}"></h1>
+  <div class="recipe-meta">
+    Категория: <span th:text="${recipe.getCategory().getName()}"></span><br>
+    Сложность: <span th:text="${recipe.getDifficulty().getRus()}"></span><br>
+    Время приготовления: <span th:text="${recipe.getCookingTime()} + ' мин.'"></span>
+  </div>
+</div>
+<div class="recipe-text" th:text="${recipe.getRecipeText()}"></div>
+<a href="/recipes" class="back-link">← Вернуться ко всем рецептам</a>
+</body>
+</html>

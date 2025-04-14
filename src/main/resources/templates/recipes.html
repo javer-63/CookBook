@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CookBook - Все рецепты</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .recipe-card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .recipe-title {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        .recipe-meta {
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<h1>Все рецепты</h1>
+Сортировать по категории:
+<select id="categorySelect" onchange="filterByCategory()">
+    <option value="">Все</option>
+    <option th:each="category : ${categories}"
+            th:value="${category.getName()}"
+            th:text="${category.getName()}"
+            th:selected="${param.category != null and param.category[0] == category.name}"></option>
+</select>
+
+<div th:each="recipe : ${recipes}" class="recipe-card">
+    <a th:href="'/recipes/' + ${recipe.getId()}">
+        <h2 class="recipe-title" th:text="${recipe.getTitle()}"></h2>
+    </a>
+    <div class="recipe-meta">
+        Категория: <span th:text="${recipe.getCategory().getName()}"></span><br>
+        Сложность: <span th:text="${recipe.getDifficulty().getRus()}"></span><br>
+        Время: <span th:text="${recipe.getCookingTime()} + ' мин.'"></span><br>
+    </div>
+    <p th:text="${recipe.getDescription()}"></p>
+</div>
+<script>
+    function filterByCategory() {
+        const category = document.getElementById('categorySelect').value;
+        window.location.href = category ? `/recipes?category=${encodeURIComponent(category)}` : '/recipes';
+    }
+</script>
+</body>
+</html>
