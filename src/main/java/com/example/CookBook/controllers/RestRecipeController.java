@@ -31,4 +31,9 @@ public class RestRecipeController {
     public Recipe recipe(@PathVariable Long id){
         return recipeService.getRecipeById(id);
     }
+    @DeleteMapping("/recipes/{id}")
+    public String deleteRecipe(@PathVariable Long id) {
+        recipeService.deleteRecipe(id);
+        return "Recipe with id " + id + " deleted successfully!";
+    }
 }

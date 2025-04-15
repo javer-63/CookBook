@@ -49,6 +49,9 @@
   </div>
 </div>
 <div class="recipe-text" th:text="${recipe.getRecipeText()}"></div>
+<form th:action="'/recipes/' + ${recipe.getId()} + '/delete'" method="post">
+  <button type="submit">Удалить</button>
+</form>
 <a href="/recipes" class="back-link">← Вернуться ко всем рецептам</a>
 </body>
 </html>

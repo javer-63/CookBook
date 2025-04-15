@@ -29,4 +29,10 @@ public class RecipeService {
     public Recipe getRecipeById(Long id){
         return recipeRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Not found recipe with id " + id));
     }
+    public void deleteRecipe(Long id) {
+        if (!recipeRepository.existsById(id)) {
+            throw new EntityNotFoundException("Recipe not found with id: " + id);
+        }
+        recipeRepository.deleteById(id);
+    }
 }
