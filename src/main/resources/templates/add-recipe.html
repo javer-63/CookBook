@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить рецепт - CookBook</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        input[type="text"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+        }
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #3498db;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<form action="/recipes/add" method="post">
+    <input type="text" name="title" placeholder="Название" required>
+    <input type="text" name="description" placeholder="Краткое описание" required>
+    <select name="difficulty" required>
+        <option value="">Выберите сложность...</option>
+        <option th:each="diff : ${difficulties}"
+                th:value="${diff}" th:text="${diff.getRus()}"></option>
+    </select>
+    <input type="number" name="cookingTime" placeholder="Время (в минутах)" required>
+    <select name="category" required>
+        <option value="">Выберите категорию...</option>
+        <option th:each="category : ${categories}"
+                th:value="${category.getId()}" th:text="${category.getName()}"></option>
+    </select>
+    <textarea name="recipeText" placeholder="Текст рецепта" required></textarea>
+    <button type="submit">Добавить рецепт</button>
+</form>
+<a href="/recipes" class="back-link">← Вернуться ко всем рецептам</a>
+</body>
+</html>
