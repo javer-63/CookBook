@@ -40,4 +40,12 @@ public class RestRecipeController {
         recipeService.deleteRecipe(id);
         return "Recipe with id " + id + " deleted successfully!";
     }
+    @PutMapping("/recipes/{id}")
+    public Recipe updateRecipe(@PathVariable Long id, @RequestBody Recipe recipe) {
+        return recipeService.updateRecipe(id, recipe);
+    }
+    @PatchMapping("/recipes/{id}")
+    public Recipe patchRecipe(@PathVariable Long id, @RequestBody Recipe recipeUpdates) {
+        return recipeService.updatePartRecipe(id, recipeUpdates);
+    }
 }

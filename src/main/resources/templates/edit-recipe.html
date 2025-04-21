@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать рецепт - CookBook</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        input[type="text"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+        }
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #3498db;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<form th:action="'/recipes/' + ${recipe.getId()} + '/edit'" method="post">
+    <input type="text" name="title" th:value="${recipe.getTitle()}" placeholder="Название" required>
+    <input type="text" name="description" th:value="${recipe.getDescription()}" placeholder="Краткое описание" required>
+    <select name="difficulty" required>
+        <option value="">Выберите сложность...</option>
+        <option th:each="diff : ${difficulties}"
+                th:value="${diff}"
+                th:text="${diff.getRus()}"
+                th:selected="${diff == recipe.getDifficulty()}"></option>
+    </select>
+    <input type="number" name="cookingTime" th:value="${recipe.getCookingTime()}" placeholder="Время (в минутах)" required>
+    <select name="category" required>
+        <option value="">Выберите категорию...</option>
+        <option th:each="category : ${categories}"
+                th:value="${category.getId()}"
+                th:text="${category.getName()}"
+                th:selected="${category.getId() == recipe.getCategory().getId()}"></option>
+    </select>
+    <textarea name="recipeText" placeholder="Текст рецепта" th:text="${recipe.recipeText}" required></textarea>
+    <button type="submit">Сохранить изменения</button>
+</form>
+<a th:href="'/recipes/' + ${recipe.getId()}" class="back-link">← Вернуться к рецепту</a>
+</body>
+</html>

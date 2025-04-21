@@ -61,4 +61,25 @@ public class RecipeController {
         recipeService.deleteRecipe(id);
         return "redirect:/recipes";
     }
+    @GetMapping("/recipes/{id}/edit")
+    public String editForm(@PathVariable Long id, Model model) {
+        model.addAttribute("recipe", recipeService.getRecipeById(id));
+        model.addAttribute("categories", categoryRepository.findAll());
+        model.addAttribute("difficulties", Difficulty.values());
+        return "edit-recipe";
+    }
+    @PostMapping("/recipes/{id}/edit")
+    public String updateRecipe(@PathVariable Long id,
+                               @RequestParam String title,
+                               @RequestParam String description,
+                               @RequestParam Difficulty difficulty,
+                               @RequestParam int cookingTime,
+                               @RequestParam(name = "category") Long categoryId,
+                               @RequestParam String recipeText) {
+        recipeService.updateRecipe(id, new Recipe(title, description, difficulty, cookingTime,
+                categoryRepository.findById(categoryId)
+                        .orElseThrow(() -> new EntityNotFoundException("Category not found")),
+                recipeText));
+        return "redirect:/recipes/" + id;
+    }
 }
